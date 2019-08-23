@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <title>Trip Buddy Dashboard</title>
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
+
+        <!-- Bootstrap core CSS -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}">    
+        <script src="{% static 'main/js/bootstrap.js' %}"></script>
+
+        <!-- Custom styles for this template -->
+        <link href="form-validation.css" rel="stylesheet"> 
+    </head>
+    <body class="bg-light">
+        <div class="w-50 mx-auto">
+        <nav class="navbar navbar-light bg-white w-100 mx-auto">
+                <h3 class="navbar-brand">Hello {{user.first_name}}</h3>
+                <form class="form-inline">
+                    <div class="input-group">
+                        <a href="/login/logout" class="form-group mr-4"><u>Logout</u></a>
+                        <a href="/trips/new" class="btn btn-primary"><u>Create a new trip!</u></a>
+                    </div>
+                    </div>
+                </form>
+            </nav>
+        </div>
+        <div class="w-50 mx-auto mt-4">
+            <h5>Your trips:</h5>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Plan</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trip in trips %}
+                    <tr>
+                        <th scope="row"><a href="/trips/{{trip.id}}"><u>{{trip.destination}}</u></a></th>
+                        <td>{{trip.start_date}}</td>
+                        <td>{{trip.end_date}}</td>
+                        <td>{{trip.plan}}</td>
+                        <td><a href="/trips/remove/{{trip.id}}">Remove</a> | <a href="/trips/edit/{{trip.id}}">Edit</a></td>
+                    </tr>
+                    {% endfor %}
+                    {% for trip in notme %}
+                    <tr>
+                        <th scope="row"><a href="/trips/{{trip.id}}"><u>{{trip.destination}}</u></a></th>
+                        <td>{{trip.start_date}}</td>
+                        <td>{{trip.end_date}}</td>
+                        <td>{{trip.plan}}</td>
+                        <td><a href="/trips/cancel/{{trip.id}}"><u>Cancel</u></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="w-50 mx-auto mt-4">
+                <h5>Other people's trips:</h5>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Plan</th>
+                            <th scope="col">Want to join?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trip in other_trips %}
+                        <tr>
+                            <th scope="row"><a href="/trips/{{trip.id}}"><u>{{trip.destination}}</u></a></th>
+                            <td>{{trip.start_date}}</td>
+                            <td>{{trip.end_date}}</td>
+                            <td>{{trip.plan}}</td>
+                            <td><a href="/trips/join/{{trip.id}}"><u>Join</u></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        <div class="w-25 mx-auto mr-3">
+            <!--ERROR MESSAGES-->
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }} mt-4" style="color:red;"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <!--END ERROR MESSAGES-->
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
